@@ -64,14 +64,20 @@ const faces = [
 
   const THEME = createMuiTheme({
     typography: {
+      "fontFamily": '"Comic Sans"',
       h6: {
         "fontWeight": 600,
       },
       h5:{
-        "fontWeight": 600,
+        "fontWeight": 1,
+        
       }
+
     },
   });
+
+  const appbartheme = createMuiTheme({   overrides: {     MuiAppBar: {       colorPrimary: {         backgroundColor: "#FFC0CB"        }     }   },   palette: {     type: "dark"   } });
+
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -167,6 +173,7 @@ const faces = [
   }
 
   export function MenuAppBar() {
+  
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -253,6 +260,7 @@ const faces = [
             )}
           </Toolbar>
         </AppBar>
+        
       </div>
     );
                 }
@@ -471,7 +479,9 @@ const faces = [
                     return (
                 
                         <div>
+                          
                             <MenuAppBar/>
+                           
                             <Container component="main" maxWidth="xs" >
                       <CssBaseline />
                       <br/>
@@ -487,7 +497,7 @@ const faces = [
                         </div>
                         <br/>
                         <MuiThemeProvider theme={THEME}>
-                      <Typography gutterBottom variant="h5" component="h2" fontWeight='600'>
+                      <Typography gutterBottom variant="h5" fontWeight='9000'>
                             {FullName}
                           </Typography>
                           </MuiThemeProvider>
@@ -501,7 +511,7 @@ const faces = [
                             {Bio}
                           </Typography>
                           <br/>
-                          <ColoredLine color="blue" />
+                          <ColoredLine color="grey" />
                           <br/>
                           <Typography gutterBottom variant="h6" component="h1">
                             Contact Details
@@ -553,7 +563,7 @@ const faces = [
                             Fax: {Faxx.faxValue}
                           </Typography>: null}
                           <br/>
-                          <ColoredLine color="blue" />
+                          <ColoredLine color="grey" />
                           <br/>
                           <Typography gutterBottom variant="h6" component="h1">
                             Social Media Links
@@ -618,7 +628,7 @@ const faces = [
                       </Card>
                     </div>
                           </Grid> 
-                         
+                          
                           <Grid item={true}>
                               <br/>
                           <Button
@@ -635,7 +645,9 @@ const faces = [
                       </Button>
                       <br/>
                       </Grid> 
+                     
                   </Grid>
+                  
                   </ThemeProvider>
                   </Container>
                   </div>

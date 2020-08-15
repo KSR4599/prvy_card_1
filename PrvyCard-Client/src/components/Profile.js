@@ -3,12 +3,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -23,11 +20,8 @@ import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import "../styles.css";
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import IconButton from '@material-ui/core/IconButton';
@@ -36,17 +30,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ImageUploader from 'react-images-upload';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Select from '@material-ui/core/Select';
 import ClearIcon from '@material-ui/icons/Clear';
 import usePlacesAutocomplete from "use-places-autocomplete";
-import Address from "./Address";
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import axios from 'axios';
 import linkedinImage from '../utils/linkedin.png';
@@ -90,11 +79,16 @@ const theme = createMuiTheme({
 
 const THEME = createMuiTheme({
   typography: {
+    
     h6: {
       "fontWeight": 600,
+      "fontFamily": 'sans-serif',
+      "fontSize": 20
     },
     h5:{
-      "fontWeight": 600,
+      "fontWeight": 700,
+      "fontSize": 30,
+      "fontFamily": '"Eczar"'
     }
   },
 });
@@ -400,8 +394,6 @@ alert(err);
 setDefaultImage("multer");
   });
   
-
-
 }
 
 };
@@ -434,6 +426,7 @@ let url = "http://localhost:8013/api1/get_profile/?username="+username;
   .then(response => {
     if(response.status == 200)
     {
+    console.log(response)
     SetFullName(response.data.firstname);
 
     if(response.data.occupation != "" && response.data.occupation != "undefined")
@@ -454,26 +447,26 @@ let url = "http://localhost:8013/api1/get_profile/?username="+username;
     setCountry(response.data.contactSchema.country);
     }
     
-
     if(response.data.contactSchema.state != "" && response.data.contactSchema.state != "null"){
     setRegion(response.data.contactSchema.state);
     }
-
-    if(response.data.contactSchema.cell != "" && response.data.contactSchema.cell  != "null"){
+     
+    if(response.data.contactSchema.cell != null && response.data.contactSchema.cell != ""){
       setShowCellPhone(true);
       setCellPhone(response.data.contactSchema.cell);
     }
-    if(response.data.contactSchema.home != "" && response.data.contactSchema.home != "null"){
+    if(response.data.contactSchema.home != null && response.data.contactSchema.home != ""){
       setShowHomePhone(true);
       setHomePhone(response.data.contactSchema.home);
     }
-    if(response.data.contactSchema.email != "" && response.data.contactSchema.email != "null"){
+    if(response.data.email != null){
       setShowEmail({showEmail:true,emailValue:response.data.email});;
     }
-    if(response.data.contactSchema.fax != "" && response.data.contactSchema.fax != "null"){
+    
+    if(response.data.contactSchema.fax != null && response.data.contactSchema.fax != ""){
       setShowFax({showFax:true,faxValue:response.data.contactSchema.fax});;
     }
-    if(response.data.socialSchema.linkedin != "" && response.data.socialSchema.linkedin != "null"){
+    if(response.data.socialSchema.linkedin != null && response.data.socialSchema.linkedIn != ""){
       SetLinkedInUName({
         LinkedInUName: response.data.socialSchema.linkedin,
         LinkedInDisable: false 
@@ -481,35 +474,35 @@ let url = "http://localhost:8013/api1/get_profile/?username="+username;
       setShowLinkedIn(true);
     }
     
-    if(response.data.socialSchema.instagram != "" && response.data.socialSchema.instagram != "null"){
+    if(response.data.socialSchema.instagram != null && response.data.socialSchema.instagram != ""){
       SetInstagramUName({
         InstagramUName: response.data.socialSchema.instagram,
         InstagramDisable: false 
       });
       setShowInstagram(true);
     }
-    if(response.data.socialSchema.facebook != "" && response.data.socialSchema.facebook != "null"){
+    if(response.data.socialSchema.facebook != null && response.data.socialSchema.facebook != ""){
       SetFacebookUName({
         FacebookUName: response.data.socialSchema.facebook,
         FacebookDisable: false 
       });
       setShowFacebook(true);
     }
-    if(response.data.socialSchema.youtube != "" && response.data.socialSchema.youtube != "null"){
+    if(response.data.socialSchema.youtube != null && response.data.socialSchema.youtube != ""){
       SetYoutubeUName({
         YoutubeUName: response.data.socialSchema.youtube,
         YoutubeDisable: false 
       });
       setShowYoutube(true);
     };
-    if(response.data.socialSchema.twitter != "" && response.data.socialSchema.twitter != "null"){
+    if(response.data.socialSchema.twitter != null && response.data.socialSchema.twitter != ""){
       SetTwitterUName({
         TwitterUName: response.data.socialSchema.twitter,
         TwitterDisable: false 
       });
       setShowTwitter(true);
     };
-    if(response.data.socialSchema.reddit != "" && response.data.socialSchema.reddit != "null"){
+    if(response.data.socialSchema.reddit != null && response.data.socialSchema.reddit != ""){
       SetRedditUName({
         RedditUName: response.data.socialSchema.reddit,
         RedditDisable: false 
@@ -531,22 +524,34 @@ let url = "http://localhost:8013/api1/get_profile/?username="+username;
 const handleSocialMediaChange = (event) => {
     setSocialMedia(event.target.value);
     if(event.target.value == 10){
-      setShowLinkedIn(true);
+      SetLinkedInUName({
+        LinkedInDisable: false
+      })
     }
     if(event.target.value == 20){
-        setShowInstagram(true);
+      SetInstagramUName({
+        InstagramDisable: false
+      })
       }
       if(event.target.value == 30){
-        setShowFacebook(true);
+        SetFacebookUName({
+          FacebookDisable: false
+        })
       }
       if(event.target.value == 40){
-        setShowYoutube(true);
+        SetYoutubeUName({
+          YoutubeDisable: false
+        })
       }
       if(event.target.value == 60){
-        setShowReddit(true);
+        SetRedditUName({
+          RedditDisable: false
+        })
       }
       if(event.target.value == 70){
-        setShowTwitter(true);
+        SetTwitterUName({
+          TwitterDisable: false
+        })
       }
   };
 
@@ -700,9 +705,6 @@ const handleContactChange = (event) => {
                 style = {{width:400}}
               />
             </Grid>
-
-
-
            <br/>
             <Grid item>
             <TextField variant="outlined"
@@ -829,7 +831,7 @@ const handleContactChange = (event) => {
       </FormControl>
       </Grid> 
       
-          {showLinkedIn? 
+          {LinkedInState.LinkedInDisable == false  ? 
           <Grid container spacing={2} alignItems="flex-end" item >
           <Grid item>
           <LinkedInIcon color="primary" />
@@ -854,7 +856,7 @@ const handleContactChange = (event) => {
           : null}
           </Grid>
 
-          {showInstagram ? <Grid container spacing={2} alignItems="flex-end" item >
+          {InstagramState.InstagramDisable == false ? <Grid container spacing={2} alignItems="flex-end" item >
             <Grid item>
             <InstagramIcon color="primary" />
           </Grid>
@@ -875,7 +877,7 @@ const handleContactChange = (event) => {
           null}
 
 
-          {showFacebook ?<Grid container spacing={2} alignItems="flex-end" item > 
+          {FacebookState.FacebookDisable == false ?<Grid container spacing={2} alignItems="flex-end" item > 
             <Grid item>
             <FacebookIcon color="primary" />
           </Grid>
@@ -895,7 +897,7 @@ const handleContactChange = (event) => {
           </Grid>
           </Grid>:
           null}
-          {showYoutube ?<Grid container spacing={2} alignItems="flex-end" item > 
+          {YoutubeState.YoutubeDisable == false ?<Grid container spacing={2} alignItems="flex-end" item > 
             <Grid item>
             <YouTubeIcon color="primary" />
           </Grid>
@@ -914,7 +916,7 @@ const handleContactChange = (event) => {
         }/>
           </Grid>
           </Grid>:null}
-          {showReddit ?
+          {RedditState.RedditDisable == false ?
           <Grid container spacing={2} alignItems="flex-end" item > 
             <Grid item>
             <RedditIcon color="primary" />
@@ -937,7 +939,7 @@ const handleContactChange = (event) => {
           </Grid>:null}
 
 
-          {showTwitter?
+          {TwitterState.TwitterDisable == false ?
           <Grid container spacing={2} alignItems="flex-end" item > 
             <Grid item>
             <TwitterIcon color="primary" />
@@ -986,13 +988,13 @@ const handleContactChange = (event) => {
         </div>
         <br/>
         <MuiThemeProvider theme={THEME}>
-      <Typography gutterBottom variant="h5" component="h2">
+      <Typography variant="h5" >
             {FullName}
           </Typography>
-          </MuiThemeProvider>
-          <Typography gutterBottom variant="h6" component="h1">
+          <Typography gutterBottom variant="h6" >
             {occupation}
           </Typography>
+          </MuiThemeProvider>
           <Typography
             className={"MuiTypography--subheading"}
             variant={"body2"}
@@ -1000,10 +1002,10 @@ const handleContactChange = (event) => {
             {Bio}
           </Typography>
           <br/>
-          <ColoredLine color="blue" />
+          <ColoredLine color="grey" />
           <br/>
           <Typography gutterBottom variant="h6" component="h1">
-            Contact Details
+            Contact
           </Typography>
           <Link href={hrefurl} color="blue">
           web link : http://localhost:3000/DisplayProfile/{username}
@@ -1051,11 +1053,11 @@ const handleContactChange = (event) => {
             Fax: {Faxx.faxValue}
           </Typography>: null}
           <br/>
-          <ColoredLine color="blue" />
+          <ColoredLine color="grey" />
           <br/>
            
           <Typography gutterBottom variant="h6" component="h1">
-            Social Media Links
+            Social Media
           </Typography>
           <div align='center' >
           { LinkedInState.LinkedInDisable == false ? <Typography gutterBottom variant="h6" component="h1" variant="body2">

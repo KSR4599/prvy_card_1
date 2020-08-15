@@ -177,6 +177,13 @@ const faces = [
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [isUser, setisUser] = useState(false);
+
+    useEffect(() =>{
+     checkisUser();
+      
+    },[])
+    
     const open = Boolean(anchorEl);
   
     const handleChange = (event) => {
@@ -214,9 +221,44 @@ const faces = [
       })
 
     })
+
+    
+    function checkisUser(username){
+
+      let url = "http://localhost:8013/get_user";
+
+      axios({
+        method: "GET",
+        withCredentials: true,
+        url: url,
+      }).then((res) => {
+        console.log('Got response '+ res.status);
+    
+    
+        if(res.status == 200){
+           console.log("User logged in!");
+           setisUser(true);
+        }
+        if(res.status == 201){
+          console.log("admin logged in!");
+          setisUser(true);
+        }
+
+        if(res.status == 202){
+            console.log("user not logged in!");
+            setisUser(false);
+          }
+    
+            })
+
+    }
+
+
+   
     
   
     return (
+
       <div className={classes.root}>
        
         <AppBar position="static">
@@ -227,8 +269,12 @@ const faces = [
             <Typography variant="h6" className={classes.title}>
               PRVYCARD
             </Typography>
+           
+            {isUser? <div>
             {auth && (
-              <div>
+
+
+             <div>
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
@@ -253,15 +299,23 @@ const faces = [
                   open={open}
                   onClose={handleClose}
                 >
-                 
-                 <MenuItem onClick={()=> { onLogout() }}> Logout</MenuItem>
+                
+  
+                  <MenuItem onClick={()=> { onLogout() }}> Logout</MenuItem>
+
                 </Menu>
-              </div>
+               
+              </div>            
+              
             )}
+            </div>
+            : null}
+         
           </Toolbar>
         </AppBar>
         
       </div>
+
     );
                 }
 
@@ -276,6 +330,7 @@ const faces = [
                   
                   const [profile,setProfile] = useState('');
                   const[isSending,setIsSending] = useState(false);
+                  
                   const isMounted =useRef(true);
                 
                 useEffect(() =>{
@@ -331,6 +386,9 @@ const faces = [
                   const[showCellPhone,setShowCellPhone] = React.useState('');
                   const[showOccupation,setShowOccupation] = React.useState('');
                   const[showHomePhone,setShowHomePhone] = React.useState('');
+                  const [isUser, setisUser] = useState(false);
+
+
                   const[Faxx,setShowFax] = useMergeState({
                       showFax: false,
                   faxValue: ''});
@@ -353,6 +411,7 @@ const faces = [
                       }}
                   />
                 );
+
                 
                 
                 function getProfile(username){
@@ -448,6 +507,9 @@ const faces = [
                 
                   });
                 };
+
+
+             
                 
                   async function downloadVcardFile(username,FullName,HomePhone,CellPhone,Emaill,Faxx,
                     LinkedInState,TwitterState,InstagramState,FacebookState,Country,Region,Address,Bio,

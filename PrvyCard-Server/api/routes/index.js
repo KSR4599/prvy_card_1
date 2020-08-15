@@ -105,14 +105,7 @@ router.get('/',function(req, res,next){
 
 
 
-  router.get('/wrong_login',function(req, res,next){
-
-    
-    console.log("wrong login!");
-
-    res.status(404).send("wrong login");
-  
-})
+ 
 
   router.get('/login1',function(req, res,next){
 
@@ -318,6 +311,84 @@ User.findOne({ 'pref_username': req.body.username}, function(err, user) {
 })
 })
 
+var result = ''
+//Forgot Password
+router.post('/forgot', function(req, res,next) {
+
+  var username= req.query.username;
+
+  console.log("In forgot and username is "+ username);
+
+  User.findOne({ 'pref_username': username}, function(err, user) {
+    if(user){
+      console.log("User found : "+ user.email)
+      var email = user.email;
+
+      result = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < 7; i++ ) {
+         result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+
+      //  //nodemailer
+     let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+          user: 'prvycard@gmail.com', // generated ethereal user
+          pass:  'prvyCard123!@#'// generated ethereal password
+      },
+      tls:{
+        rejectUnauthorized:false
+      }
+  });
+
+  var code_string = '<p> Your code for password retrieval is  ' + result + '. </p>';
+
+  let mailOptions = {
+  from: '"PRVY CARD" <prvycard@gmail.com>', // sender address
+  to: email, // list of receivers
+  subject: '❕❕ PRVY CARD Forgot Password',
+  html: code_string
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+  });
+
+
+  //END OF MAIL TRIGGERING //
+
+  user.forgot_password_code = result;
+
+  user.save(function(err, userUpdated) {
+    if (err) {
+     console.log(err);
+    } else {
+     console.log("User forgot password code : "+userUpdated.forgot_password_code);
+     
+      res.status(200).send("email sent!");
+     
+    }
+
+
+    })
+  }
+    else {
+      console.log("User not found!");
+      res.status(201).send("user not found");
+    }
+  })
+
+})
 
 
 

@@ -80,6 +80,7 @@ useEffect(() =>{
 
 const sendRequest = useCallback(async (username,password) => {
  
+  
   if(username == "admin" && password=="admin"){
 
       setIsSending(true);
@@ -95,6 +96,13 @@ const sendRequest = useCallback(async (username,password) => {
     withCredentials: true,
     url: url,
   }).then((res) => {
+    console.log('Got response '+ res.status);
+
+    if(res.status == 404){
+      window.alert("Invald Credentials. Please register or try again")
+      //history.push("/login");
+    }
+
     if(res.status == 200){
       history.push({
         pathname: '/profile/'+username,
@@ -107,23 +115,21 @@ const sendRequest = useCallback(async (username,password) => {
         state: { username: username }
       })
     }
-    if(res.status == 404){
-      window.alert("User not found.Please register first.")
-      history.push("/");
-    }
+   
     if(isMounted.current)
     setIsSending(false);
-  }
+  })
+
   
-  );
   }
-  
+
 
   else{
 //if(isSending) return;
   setIsSending(true);
 
  let url = "http://localhost:8013/login1/"
+
 
   axios({
     method: "POST",
@@ -134,6 +140,7 @@ const sendRequest = useCallback(async (username,password) => {
     withCredentials: true,
     url: url,
   }).then((res) => {
+    console.log('Got response '+ res);
     if(res.status == 200){
       history.push({
         pathname: '/profile/'+username,
@@ -146,21 +153,21 @@ const sendRequest = useCallback(async (username,password) => {
         state: { username: username }
       })
     }
-    if(res.status == 404){
-      window.alert("User not found.Please register first.")
-      history.push("/");
+    if(res.status == 202){
+
+      window.alert("Invalid Credentials!")
+      history.push("/login");
     }
     if(isMounted.current)
     setIsSending(false);
   }
   
   );
-};
 
 
-  // }
-  })
+}
 
+})
 
   
  
@@ -217,7 +224,7 @@ const sendRequest = useCallback(async (username,password) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" onClick={()=>history.push("/forgot_password")}variant="body2">
                 Forgot password?
               </Link>
             </Grid>

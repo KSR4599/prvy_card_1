@@ -19,6 +19,7 @@
     "@okta/okta-react": "^1.2.3",
     "@progress/kendo-drawing": "^1.5.12",
     "@progress/kendo-react-pdf": "^3.2.2",
+    "antd": "^4.5.3",
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "base-64": "^0.1.0",

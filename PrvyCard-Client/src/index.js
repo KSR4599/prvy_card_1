@@ -9,6 +9,7 @@ import Admin from "./components/Admin";
 import Profile from "./components/Profile";
 import Loader from "./components/Loader";
 import DisplayProfile from "./components/DisplayProfile";
+import Forgot_Password from "./components/Forgot_Password";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ProtectedRoute1 } from "./ProtectedRoute1";
 
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route exact path="/account" component={Account}/>
       <Route exact path ="/admin" component={Loader}/>
       <Route exact path ="/admin1" component={Admin}/>
+      <Route exact path ="/forgot_password" component={Forgot_Password}/>
       <ProtectedRoute exact path="/profile/:username" component={Profile}/>
       <Route exact path="/DisplayProfile/:username/" component={DisplayProfile}/>
       </Switch>

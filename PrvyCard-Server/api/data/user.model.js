@@ -65,6 +65,10 @@ var userSchema= new mongoose.Schema({
   
       },
 
+      forgot_password_code: {
+        type: String,
+      },
+
     socialSchema: socialSchema1,
 
     contactSchema: contactSchema1

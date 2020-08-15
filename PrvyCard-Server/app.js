@@ -137,14 +137,25 @@ app.get('*',function(req,res,next){
   next();
 })
 
+//failureRedirect:'/api/wrong_login'
+//failWithError: true 
 
+app.get('/wrong_login',function(req, res,next){
+
+    
+  console.log("wrong login!!");
+
+  res.status(202).send("error");
+
+})
+
+wrong = false;
 app.post('/login1',
-passport.authenticate('local',{session: false , failureRedirect:'/api/wrong_login'}),
-function(req, res, next){
+passport.authenticate('local',{session: false, failureRedirect:'/wrong_login' }),
+function(req, res, err){
 
   console.log("After auth and user is : "+ req.user.pref_username );
   req.logIn(req.user, err => {
-    if (err) throw err;
 
     if(flag == 2){
       res.status(200).send("normal");
@@ -207,6 +218,52 @@ passport.deserializeUser(function(id, done) {
       return done(err, user);
 });
 });
+
+
+app.post('/resetPass', function(req, res,next) {
+  var username= req.body.username;
+  var password = req.body.password;
+  var code = req.body.code;
+
+  console.log('Username : '+ username)
+  console.log('password : '+ password)
+  console.log('code : '+ code)
+
+
+  User.findOne({ 'pref_username': username}, function(err, user) {
+    if(user){
+
+      if(user.forgot_password_code != code){
+        res.status(202).send("code mismatch");
+        return;
+      } else {
+
+      user.password = password;
+
+      user.save(function(err, userUpdated) {
+        if (err) {
+          console.log(err)
+        } else {
+            User.cryptUser(userUpdated,function(err, user){
+                if(err) throw err;
+                console.log(user);
+          
+              })
+          console.log("User is updated : "+ userUpdated);
+          res.status(200).send("user password is updated succesfully");
+        }
+      });
+    }
+
+
+    } else {
+      console.log("User not found!");
+      res.status(201).send("user not found");
+    }
+
+
+})
+})
 
 
 app.get('/get_user', (req, res, next) => {

@@ -64,7 +64,7 @@ const faces = [
 
   const THEME = createMuiTheme({
     typography: {
-      "fontFamily": '"Comic Sans"',
+      "fontFamily": '"Montserrat, sans-serif"',
       h6: {
         "fontWeight": 600,
       },
@@ -76,8 +76,56 @@ const faces = [
     },
   });
 
+
   const appbartheme = createMuiTheme({   overrides: {     MuiAppBar: {       colorPrimary: {         backgroundColor: "#FFC0CB"        }     }   },   palette: {     type: "dark"   } });
 
+
+
+// Or Create your Own theme:
+const theme1 = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+ 
+
+theme1.typography.h1 = {
+  fontFamily: 'Montserrat, sans-serif',
+  fontWeight: 'bold',
+  color: '#fafafa',
+  fontSize: 19,
+};
+
+  theme1.typography.h3 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+    color: '#212121',
+    fontSize: 25,
+  };
+
+  theme1.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+      color: '#212121',
+      fontSize: 15,
+  };
+
+  theme1.typography.h5 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+      color: '#9e9e9e',
+      fontSize: 15,
+  };
+
+  theme1.typography.text1 = {
+    fontFamily: 'Eczar, serif',
+    fontWeight: 'bold'
+  };
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -222,6 +270,8 @@ const faces = [
 
     })
 
+
+
     
     function checkisUser(username){
 
@@ -258,15 +308,13 @@ const faces = [
     
   
     return (
+      <MuiThemeProvider theme={theme1}>
 
       <div className={classes.root}>
        
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h1" className={classes.title}>
               PRVYCARD
             </Typography>
            
@@ -315,6 +363,7 @@ const faces = [
         </AppBar>
         
       </div>
+      </MuiThemeProvider>
 
     );
                 }
@@ -508,7 +557,14 @@ const faces = [
                   });
                 };
 
-
+                const borderProps = {
+                  bgcolor: 'background.paper',
+                  borderColor: 'text.primary',
+                  m: 1,
+                  border: 2,
+                  style: { width: '7.3rem', height: '7.3rem' },
+                };
+              
              
                 
                   async function downloadVcardFile(username,FullName,HomePhone,CellPhone,Emaill,Faxx,
@@ -539,7 +595,7 @@ const faces = [
                     let getprofileimageurl = "http://localhost:8013/api1/get_profileimage/?username="+props.match.params.username
                     let hrefurl = "http://localhost:3000/DisplayProfile/"+props.match.params.username
                     return (
-                
+                      <MuiThemeProvider theme={theme1}>
                         <div>
                           
                             <MenuAppBar/>
@@ -548,24 +604,29 @@ const faces = [
                       <CssBaseline />
                       <br/>
                       <br/>
-                      <ThemeProvider theme={theme}>
+                      <ThemeProvider theme={theme1}>
                         <Grid container={true} justify="left" style = {{width:500}}>
                       <Grid item={true} >
                       <div className={classes.App} >
                       <Card className={classes.card}>
                       <CardContent className={classes.content} >
                         <div align="center">
+                        <Box borderRadius="50%" {...borderProps}> 
                         <Avatar className={classes.avatar} key={faces} src={getprofileimageurl} className={classes.large} />
+                        </Box>
                         </div>
                         <br/>
-                        <MuiThemeProvider theme={THEME}>
-                      <Typography gutterBottom variant="h5" fontWeight='9000'>
+
+                        
+                        <MuiThemeProvider theme={theme1}>
+                      <Typography gutterBottom variant="h3">
                             {FullName}
                           </Typography>
+
+                          <Typography variant="h4">{occupation}</Typography>
+
                           </MuiThemeProvider>
-                          <Typography gutterBottom variant="h6" component="h1">
-            {occupation}
-          </Typography>
+                    
                           <Typography
                             className={"MuiTypography--subheading"}
                             variant={"body2"}
@@ -575,10 +636,11 @@ const faces = [
                           <br/>
                           <ColoredLine color="grey" />
                           <br/>
-                          <Typography gutterBottom variant="h6" component="h1">
-                            Contact Details
+                          <Typography variant="h5">
+                            Contact 
                           </Typography>
-                          <Link href={hrefurl} color="blue">
+                          <br/>
+                          <Link href={hrefurl} color="primary">
           web link : http://localhost:3000/DisplayProfile/{props.match.params.username}
   </Link>
   <br/>
@@ -627,9 +689,14 @@ const faces = [
                           <br/>
                           <ColoredLine color="grey" />
                           <br/>
-                          <Typography gutterBottom variant="h6" component="h1">
-                            Social Media Links
+
+                          <MuiThemeProvider theme={theme1}>
+                          <Typography variant="h5">
+                            Social Media 
                           </Typography>
+
+                          </MuiThemeProvider>
+                          
                           <div align='center' >
                           {LinkedInState.LinkedInUName != "" ? <Typography gutterBottom variant="h6" component="h1" variant="body2">
           <IconButton aria-label="linkedIn" disabled={!showLinkedIn} onClick={()=> window.open("https://www.linkedin.com/in/"+LinkedInState.LinkedInUName, "_blank")}>
@@ -681,19 +748,24 @@ const faces = [
                            </div>
                           <Divider className={classes.divider} light />
                           <Typography variant="overline" display="block" gutterBottom align='center'>
-                        PRVY CARD
+                        PRVYCARD
                       </Typography>
                       <Typography variant="caption" display="block" gutterBottom align='center'>
-                        powered by PRVY CARD
+                        Powered by PRVY
                       </Typography>
                         </CardContent>
-                      </Card>
-                    </div>
-                          </Grid> 
-                          
-                          <Grid item={true}>
-                              <br/>
-                          <Button
+
+                     
+                   
+
+                      </Card> 
+                      <br/>
+                      <br/>
+
+      
+
+                      <div align="center">
+                        <Button
                         variant="contained"
                         color="primary"
                         size="large"
@@ -703,15 +775,29 @@ const faces = [
                           LinkedInState.LinkedInUName,TwitterState.TwitterUName,InstagramState.InstagramUName,FacebookState.FacebookUName,Country,Region,Address,Bio,
                           RedditState.RedditUName,PinterestState.PinterestUName,YoutubeState.YoutubeUName)}
                       >
-                        Download Details
+                        Add to Contact
                       </Button>
+                        
+                      </div>
+
+
+                    </div>
+
+
+                          </Grid> 
+            
+                          <Grid item={true}>
+                              <br/>
+                             
                       <br/>
                       </Grid> 
+               
                      
                   </Grid>
-                  
+                   <br/>
                   </ThemeProvider>
                   </Container>
                   </div>
+                  </MuiThemeProvider>
                     );
                   }

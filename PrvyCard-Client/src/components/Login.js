@@ -15,6 +15,38 @@ import Container from '@material-ui/core/Container';
 import { createBrowserHistory } from "history";
 import axios from 'axios';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+
+// Or Create your Own theme:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+ 
+
+theme.typography.h1 = {
+  fontFamily: 'Eczar, serif',
+  fontWeight: 'bold',
+  fontSize: 47,
+};
+
+  theme.typography.h3 = {
+    fontWeight: 'bold',
+      color: '#eceff1'
+  };
+
+  theme.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+  };
+
+
 const history = createBrowserHistory({ forceRefresh: true });
 
 function Copyright() {
@@ -173,12 +205,13 @@ const sendRequest = useCallback(async (username,password) => {
  
 
   return (
+    <MuiThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-      <h1>PRVYCARD</h1>
-        <Typography component="h1" variant="h5">
-          Sign in
+      <Typography variant="h1">PRVY CARD</Typography>
+        <Typography variant="h5">
+         Sign In
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -220,17 +253,18 @@ const sendRequest = useCallback(async (username,password) => {
               sendRequest(username,password)}
             }
           >
-            Sign In
+           <Typography variant="h3">Login</Typography> 
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" onClick={()=>history.push("/forgot_password")}variant="body2">
-                Forgot password?
+              <Typography variant="h4"> Forgot Password?</Typography> 
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" onClick={()=>history.push("/")}variant="body2">
-                {"Don't have an account? Register"}
+
+                <Typography variant="h4"> Don't have an account? Register</Typography> 
               </Link>
             </Grid>
           </Grid>
@@ -240,5 +274,6 @@ const sendRequest = useCallback(async (username,password) => {
         <Copyright />
       </Box>
     </Container>
+    </MuiThemeProvider>
   );
 }

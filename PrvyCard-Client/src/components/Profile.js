@@ -45,6 +45,54 @@ import redditImage from '../utils/reddit.jpeg';
 import twitterImage from '../utils/twitter.png';
 import youtubeImage from '../utils/youtube.png';
 import { MuiThemeProvider, createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
+import { borders } from '@material-ui/system';
+
+
+const theme1 = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+ 
+
+theme1.typography.h1 = {
+  fontFamily: 'Montserrat, sans-serif',
+  fontWeight: 'bold',
+  color: '#fafafa',
+  fontSize: 19,
+};
+
+  theme1.typography.h3 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+    color: '#212121',
+    fontSize: 25,
+  };
+
+  theme1.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+      color: '#212121',
+      fontSize: 15,
+  };
+
+  theme1.typography.h5 = {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 'bold',
+      color: '#9e9e9e',
+      fontSize: 15,
+  };
+
+  theme1.typography.text1 = {
+    fontFamily: 'Eczar, serif',
+    fontWeight: 'bold'
+  };
+
 
 const faces = [
     "http://i.pravatar.cc/300?img=1"
@@ -119,7 +167,7 @@ const useStyles = makeStyles((theme) => ({
       height:'50%'
   },
   card: {
-    maxWidth: 500,
+    maxWidth: 600,
     margin: "auto",
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
@@ -230,14 +278,13 @@ function useMergeState(initialState) {
     })
   
     return (
+      <MuiThemeProvider theme={theme1}>
       <div className={classes.root}>
        
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
+     
+            <Typography variant="h1" className={classes.title}>
               PRVYCARD
             </Typography>
             {auth && (
@@ -278,6 +325,7 @@ function useMergeState(initialState) {
           </Toolbar>
         </AppBar>
       </div>
+      </MuiThemeProvider>
     );
   }
 
@@ -617,17 +665,28 @@ const handleContactChange = (event) => {
       body: formData
     });
   };
+
+  const borderProps = {
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
+    m: 1,
+    border: 2,
+    style: { width: '7.3rem', height: '7.3rem' },
+  };
+
+
  let hrefurl = "http://localhost:3000/DisplayProfile/"+username
  let getprofileimageurl = "http://localhost:8013/api1/get_profileimage/?username="+username
   return (
-   
-( 
+    <MuiThemeProvider theme={theme1}>
+
+  
 <div>
     <MenuAppBar uname={username}/>
     <CssBaseline />
     <div className={classes.paper}>
       </div>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme1}>
       <Grid container={true} spacing={24}>
       <Grid item={true} xs={8} sm={6}>
     <Container component="main" maxWidth="xs" >
@@ -978,22 +1037,23 @@ const handleContactChange = (event) => {
     </Container>
     </Grid>
 
-   
+ 
     <Grid item={true} xs={12} sm={6} >
     <div className={classes.App} >
       <Card className={classes.card}>
       <CardContent className={classes.content} >
         <div align="center">
+        <Box borderRadius="50%" {...borderProps}> 
         <Avatar className={classes.avatar} key={faces} src={getprofileimageurl} className={classes.large} />
+        </Box>
+
         </div>
         <br/>
-        <MuiThemeProvider theme={THEME}>
-      <Typography variant="h5" >
+        <MuiThemeProvider theme={theme1}>
+      <Typography variant="h3" >
             {FullName}
           </Typography>
-          <Typography gutterBottom variant="h6" >
-            {occupation}
-          </Typography>
+          <Typography variant="h4">{occupation}</Typography>
           </MuiThemeProvider>
           <Typography
             className={"MuiTypography--subheading"}
@@ -1004,10 +1064,10 @@ const handleContactChange = (event) => {
           <br/>
           <ColoredLine color="grey" />
           <br/>
-          <Typography gutterBottom variant="h6" component="h1">
-            Contact
-          </Typography>
-          <Link href={hrefurl} color="blue">
+          <Typography variant="h5">
+                            Contact 
+                          </Typography>
+          <Link href={hrefurl} color="primary">
           web link : http://localhost:3000/DisplayProfile/{username}
   </Link>
   <br/>
@@ -1056,9 +1116,9 @@ const handleContactChange = (event) => {
           <ColoredLine color="grey" />
           <br/>
            
-          <Typography gutterBottom variant="h6" component="h1">
-            Social Media
-          </Typography>
+          <Typography variant="h5">
+                            Social Media 
+                          </Typography>
           <div align='center' >
           { LinkedInState.LinkedInDisable == false ? <Typography gutterBottom variant="h6" component="h1" variant="body2">
           <IconButton aria-label="linkedIn" disabled={!showLinkedIn} onClick={()=> window.open("https://www.linkedin.com/in/"+LinkedInState.LinkedInUName, "_blank")}>
@@ -1122,6 +1182,7 @@ const handleContactChange = (event) => {
 </ThemeProvider>
 
     </div>
-)
+
+</MuiThemeProvider>
   );
 }

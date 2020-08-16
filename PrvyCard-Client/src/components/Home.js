@@ -16,6 +16,38 @@ import { createBrowserHistory } from "history";
 import RegisterUser from"../Services/Register";
 import axios from 'axios';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+
+// Or Create your Own theme:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+ 
+
+  theme.typography.h1 = {
+    fontFamily: 'Eczar, serif',
+    fontWeight: 'bold',
+    fontSize: 47,
+  };
+
+  theme.typography.h3 = {
+    fontWeight: 'bold',
+      color: '#eceff1'
+  };
+
+  theme.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+  };
+
+  
 const history = createBrowserHistory({ forceRefresh: true });
 function Copyright() {
   return (
@@ -47,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
+  }
 }));
 
 function timeout(delay) {
@@ -129,11 +161,13 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
 
 
   return (
+    <MuiThemeProvider theme={theme}>
+   
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <h1>PRVYCARD</h1>
-        <Typography component="h1" variant="h5">
+      <Typography variant="h1">PRVY CARD</Typography>
+        <Typography variant="h5">
           Please register below
         </Typography>
         <form className={classes.form} noValidate>
@@ -147,6 +181,7 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
                 fullWidth
                 id="firstName"
                 label="First Name"
+                color="secondary"
                 autoFocus
                 onChange={(e)=>setfname(e.target.value)}
               />
@@ -160,6 +195,7 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                color="secondary"
                 onChange={(e)=>setlname(e.target.value)}
               />
             </Grid>
@@ -172,6 +208,7 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                color="secondary"
                 onChange={(e)=>setemail(e.target.value)}
               />
             </Grid>
@@ -183,6 +220,7 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
                 name="username"
                 label="User Name"
                 id="username"
+                color="secondary"
                 onChange={(e)=>setuname(e.target.value)}
               />
             </Grid>
@@ -202,17 +240,18 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
             disabled={isSending}
             onClick={()=>sendRequest(fname,lname,email,uname)}
           >
-            Register
+         <Typography variant="h3">Register</Typography> 
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" onClick={()=>history.push("/account")} variant="body2">
-                Already registered? Create an account
+              <Typography variant="h4"> Already registered? Create an account</Typography> 
+               
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" onClick={()=>history.push("/login")} variant="body2">
-                Already have an account? Sign in
+              <Typography variant="h4"> Already have an Account? Sign-in</Typography> 
               </Link>
             </Grid>
           </Grid>
@@ -221,5 +260,7 @@ const sendRequest = useCallback(async(fname,lname,email,uname) => {
       <Box mt={5}>
       </Box>
     </Container>
+
+    </MuiThemeProvider>
   );
 }

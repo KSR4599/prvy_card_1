@@ -15,7 +15,39 @@ import Container from '@material-ui/core/Container';
 import { createBrowserHistory } from "history";
 import axios from 'axios';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+
+// Or Create your Own theme:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+
+theme.typography.h1 = {
+  fontFamily: 'Eczar, serif',
+  fontWeight: 'bold',
+  fontSize: 47,
+};
+
+  theme.typography.h3 = {
+    fontWeight: 'bold',
+      color: '#eceff1'
+  };
+
+  theme.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+  };
+
 const history = createBrowserHistory({ forceRefresh: true });
+
+
 
 function Copyright() {
   return (
@@ -140,12 +172,13 @@ export default function SignUp() {
 
     
   return (
+    <MuiThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <h1>PRVYCARD</h1>
-        <Typography component="h1" variant="h5">
-          Create your account
+        <Typography variant="h1">PRVY CARD</Typography>
+        <Typography variant="h5">
+        Create your account
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -234,7 +267,8 @@ export default function SignUp() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" onClick={()=>history.push("/login")} variant="body2">
-                Already have an account? Sign in
+                
+                <Typography variant="h4">Already have an account? Sign in</Typography> 
               </Link>
             </Grid>
           </Grid>
@@ -243,5 +277,6 @@ export default function SignUp() {
       <Box mt={5}>
       </Box>
     </Container>
+    </MuiThemeProvider>
   );
 }

@@ -2,8 +2,41 @@ import { Form, Input, Button, Checkbox, PageHeader } from 'antd';
 import React, { Component, Fragment } from 'react';
 import {  DatePicker, version } from "antd";
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 import { createBrowserHistory } from "history";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+// Or Create your Own theme:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: {
+      main: '#212121',
+    },
+  },
+});
+ 
+
+theme.typography.h1 = {
+  fontFamily: 'Eczar, serif',
+  fontWeight: 'bold',
+  fontSize: 47,
+};
+
+  theme.typography.h3 = {
+    fontWeight: 'bold',
+      color: '#eceff1'
+  };
+
+  theme.typography.h4 = {
+    fontFamily: 'Montserrat, sans-serif',
+  };
+
 const history = createBrowserHistory({ forceRefresh: true });
+
+
 
 class Forgot_Password extends Component {
 
@@ -45,6 +78,7 @@ class Forgot_Password extends Component {
           if(res.status == 201){
   
             window.alert("Please check your username again");
+            this.setState({showPass : false});
       
             
           } 
@@ -123,10 +157,16 @@ class Forgot_Password extends Component {
     {
         const { showPass } = this.state;
       return (
-
+        <MuiThemeProvider theme={theme}>
+   <br/> <br/> <br/> <br/>
           <div align="center" >
 
-      <h1>Forgot Password</h1>
+          <Typography variant="h1">PRVY CARD</Typography>
+        <Typography variant="h5">
+         Forgot Password
+        </Typography>
+
+
           <Form>
         <Form.Item
           label="Enter your username"
@@ -137,9 +177,10 @@ class Forgot_Password extends Component {
         </Form.Item>
   
 
-          <Button onClick ={this.handleForgot} type="primary" htmlType="submit">
+          <Button onClick ={this.handleForgot} type="default" htmlType="submit">
             Submit
           </Button>
+        
       </Form>
 
  
@@ -174,7 +215,7 @@ class Forgot_Password extends Component {
       </Form.Item>
 
 
-      <Button onClick ={this.handleReset} type="primary" htmlType="submit">
+      <Button onClick ={this.handleReset} type="default" htmlType="submit">
             Reset Password
           </Button>
           </Form>
@@ -189,7 +230,7 @@ class Forgot_Password extends Component {
 
          
           </div>
-
+</MuiThemeProvider>
 
 
   
